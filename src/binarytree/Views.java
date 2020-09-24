@@ -64,6 +64,16 @@ public class Views {
 		rightView(root.left, currHeight + 1);
 	}
 	
+	static int maxHeightLeft = -1;
+	public static void leftView(BinaryTree.Node root, int currHeight) {
+		if(root == null) return;
+		
+		if(currHeight > maxHeightLeft) System.out.print(root.data + " ");
+		maxHeightLeft = Math.max(currHeight, maxHeightLeft);
+		leftView(root.left, currHeight + 1);
+		leftView(root.right, currHeight + 1);
+	}
+	
 	//Important
 	static TreeMap<Integer, LinkedList<BinaryTree.Node> > map = new TreeMap<>(new Comparator<Integer>() {
 		public int compare(Integer a, Integer b) {
@@ -95,6 +105,14 @@ public class Views {
 		bottomView(root.right, horizontalIdx - 1, depth + 1);		
 	}
 	
+	static void topView(Node root, int horizontalIdx) {
+		if(root == null) return;
+		
+		System.out.print(root.data + " ");
+		topView(root.left, horizontalIdx + 1);
+		
+	}
+	
 	public static void main(String[] args) {
 		BinaryTree bTree = new BinaryTree();
 		LinkedList<Integer> list = new LinkedList<>(
@@ -108,7 +126,8 @@ public class Views {
 //				Arrays.asList(1, 2, 3, 4, 5, -1, 6, -1, -1, -1, -1, -1, -1));
 		
 //		Node newRoot = levelOrderInput();
-//		rightView(bTree.root, 0);
+		rightView(bTree.root, 0);System.out.println();
+		leftView(bTree.root, 0);System.out.println();
 		bottomView(bTree.root, 0,0);
 		for(int i:map.keySet()) {
 			System.out.print(map.get(i).getFirst().data + " ");
