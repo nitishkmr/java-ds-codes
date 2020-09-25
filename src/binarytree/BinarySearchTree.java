@@ -59,7 +59,6 @@ public class BinarySearchTree {
 
 	public static void deleteNode(Node node, int key, Node parent, boolean ilc) {
 		if(node == null) return;
-		
 		if (key < node.data) {
 			deleteNode(node.left, key, node, true);
 		} else if (key > node.data) {
@@ -176,12 +175,23 @@ public class BinarySearchTree {
 		printChildWise(root.right);
 	}
 
+	public static void keysInRange(Node root, int k1, int k2) {
+		if(root == null) {
+			return;
+		}
+		
+		if(root.data >= k1 && root.data <= k2) {
+			System.out.print(root.data + " ");
+		}
+		keysInRange(root.left, k1, k2);
+		keysInRange(root.right, k1, k2);
+	}
+	
 	public static void main(String[] args) {
 		//5,3,2,4,7,6,8
 //		int[] treeArr = {5,3,2,4,7,6,8};
 //		int[] deleteArr = {7, 7,2,8,8,8,8,8,2,3,5,6,4};
 //		int tcase = sc.nextInt();
-//		while(tcase-- > 0) {		
 //		18
 //		int[] treeArr = {172, 468, 963, 94, 951, 803, 683, 630, 198, 672, 327, 216, 451, 738, 798, 251, 558, 159}; 
 //		11
@@ -197,9 +207,6 @@ public class BinarySearchTree {
 			System.out.println();
 //			printChildWise(root);
 			root = null;
-//		}
 		
 	}
-
-
 }
