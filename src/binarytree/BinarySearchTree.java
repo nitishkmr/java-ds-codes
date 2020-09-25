@@ -4,6 +4,7 @@ import java.util.Scanner;
 
 
 
+
 /**
  * @author Nitish
  *
@@ -57,6 +58,8 @@ public class BinarySearchTree {
 	}
 
 	public static void deleteNode(Node node, int key, Node parent, boolean ilc) {
+		if(node == null) return;
+		
 		if (key < node.data) {
 			deleteNode(node.left, key, node, true);
 		} else if (key > node.data) {
@@ -104,9 +107,43 @@ public class BinarySearchTree {
 		}
 	}
 	
-	private static void deleteNode(int[] deleteArr) {
+	public static Node findMinNode(Node root) {
+		if(root.left == null) {
+			return root;
+		}
+		return findMinNode(root.left);
+	}
+	
+	public static Node deleteNode2(Node root, int key) {
+		if(root == null)
+		{
+			return null;
+		}
+		
+		if(key < root.data) {
+			root.left = deleteNode2(root.left, key);
+		}else if(key > root.data) {
+			root.right = deleteNode2(root.right, key);
+		}else {
+			
+			if(root.left == null) {
+				return deleteNode2(root.right, key);
+			}
+			if(root.right == null) {
+				return deleteNode2(root.left, key); 
+			}
+			
+			Node temp = findMinNode(root.right);
+			deleteNode2(root.right, temp.data);
+			root.data = temp.data;
+			}
+		return root;
+	}
+	
+	public static void deleteNode(int[] deleteArr) {
 		for(int i: deleteArr) {
 			deleteNode(root, i, null, false);
+//			root = deleteNode2(root, i);
 		}
 	}
 	
@@ -117,21 +154,48 @@ public class BinarySearchTree {
 		}
 		return arr;
 	}
+	
+	public static void printChildWise(Node root) {
+		if(root == null) {
+			return;
+		}
+		
+		System.out.print(root.data + " -> ");
+		if(root.left != null) {
+			System.out.print(root.left.data + ", ");
+		}else {
+			System.out.print("NULL" + ", ");
+		}
+		if(root.right != null) {
+			System.out.println(root.right.data);
+		}
+		else {
+			System.out.println("NULL");
+		}
+		printChildWise(root.left);
+		printChildWise(root.right);
+	}
 
 	public static void main(String[] args) {
 		//5,3,2,4,7,6,8
-		int[] arr = {5,3,2,4,7,6,8};
-		int[] arr2 = {8,6};
+//		int[] treeArr = {5,3,2,4,7,6,8};
+//		int[] deleteArr = {7, 7,2,8,8,8,8,8,2,3,5,6,4};
 //		int tcase = sc.nextInt();
-//		while(tcase-- > 0) {			
-//			int n = sc.nextInt();
-//			int[] treeArr = inputArr(n);
-//			int m = sc.nextInt();
-//			int[] deleteArr = inputArr(m);
-			createBST(arr);
-			deleteNode(arr2);
+//		while(tcase-- > 0) {		
+//		18
+//		int[] treeArr = {172, 468, 963, 94, 951, 803, 683, 630, 198, 672, 327, 216, 451, 738, 798, 251, 558, 159}; 
+//		11
+//		int[] deleteArr = {683, 159, 327, 94, 451, 738, 738}; 
+		
+			int n = sc.nextInt();
+			int[] treeArr = inputArr(n);
+			int m = sc.nextInt();
+			int[] deleteArr = inputArr(m);
+			createBST(treeArr);
+			deleteNode(deleteArr);
 			print(root);
 			System.out.println();
+//			printChildWise(root);
 			root = null;
 //		}
 		
