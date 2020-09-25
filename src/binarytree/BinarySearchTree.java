@@ -57,29 +57,40 @@ public class BinarySearchTree {
 	}
 
 	public static void deleteNode(Node node, int key, Node parent, boolean ilc) {
-
 		if (key < node.data) {
 			deleteNode(node.left, key, node, true);
 		} else if (key > node.data) {
 			deleteNode(node.right, key, node, false);
 		} else {
 			if (node.left == null && node.right == null) {
-				if (ilc) {
-					parent.left = null;
-				} else {
-					parent.right = null;
+				if(parent!=null) {
+					if (ilc) {
+						parent.left = null;
+					} else {
+						parent.right = null;
+					}					
+				}else {
+					root = null;
 				}
 			} else if (node.left == null && node.right != null) { // check for only left / right
-				if (ilc) {
-					parent.left = node.right;
-				} else {
-					parent.right = node.right;
+				if(parent!=null) {
+					if (ilc) {
+						parent.left = node.right;
+					} else {
+						parent.right = node.right;
+					}
+				}else {
+					root = node.right;
 				}
 			} else if (node.left != null && node.right == null) { // check for only left / right
-				if (ilc) {
-					parent.left = node.left;
-				} else {
-					parent.right = node.left;
+				if(parent!=null) {
+					if (ilc) {
+						parent.left = node.left;
+					} else {
+						parent.right = node.left;
+					}
+				}else {
+					root = node.left;
 				}
 			} else {
 				// find min from the right subtree of the node
@@ -91,7 +102,6 @@ public class BinarySearchTree {
 				deleteNode(node.right, node.data, node, false);
 			}
 		}
-
 	}
 	
 	private static void deleteNode(int[] deleteArr) {
@@ -109,19 +119,21 @@ public class BinarySearchTree {
 	}
 
 	public static void main(String[] args) {
-
-//		int[] arr = {5, 3, 2, 4, 7, 6, 8};
-		int tcase = sc.nextInt();
-		while(tcase-- > 0) {			
-			int n = sc.nextInt();
-			int[] treeArr = inputArr(n);
-			int m = sc.nextInt();
-			int[] deleteArr = inputArr(m);
-			createBST(treeArr);
-			deleteNode(deleteArr);
+		//5,3,2,4,7,6,8
+		int[] arr = {5,3,2,4,7,6,8};
+		int[] arr2 = {8,6};
+//		int tcase = sc.nextInt();
+//		while(tcase-- > 0) {			
+//			int n = sc.nextInt();
+//			int[] treeArr = inputArr(n);
+//			int m = sc.nextInt();
+//			int[] deleteArr = inputArr(m);
+			createBST(arr);
+			deleteNode(arr2);
 			print(root);
+			System.out.println();
 			root = null;
-		}
+//		}
 		
 	}
 
