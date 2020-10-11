@@ -96,6 +96,9 @@ public class graphFunctions {
 		return flag == 1 ? true:false;
 	}
 	
+	static boolean isTree() {
+		return (!isCyclic() && isConnected());
+	}
 	
 	public static void main(String[] args) {
 		g1.addVertex("A");
@@ -118,6 +121,7 @@ public class graphFunctions {
 		g1.display();
 		System.out.println(isCyclic());
 		System.out.println(isConnected());
+		System.out.println(isTree());
 		
 	}
 
